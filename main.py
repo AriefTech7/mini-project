@@ -50,10 +50,9 @@ def callresources(bahan):
 def checkingredients(bahan, coffee):
     ingredients = MENU[coffee]['ingredients']
     for bahan2 in ingredients:
-        if bahan[bahan2] > ingredients[bahan2]:
-            return 'good'
-        else:
-            return 'not good'
+        if bahan[bahan2] < ingredients[bahan2]:
+            return 'not good'# jika sudah dideklarasikan return maka langsung keluar dari loop
+    return 'good'
 
 
 def make_a_coffee(bahan, coffee):
@@ -81,11 +80,16 @@ def calculate_coin(querters, dimes, nickles, pennies):
 def check_transaction(money, coffe):
     price = MENU[coffe]['cost']
     if money <  price:
-        return "Sorry that's not enough money. Money refunded."
-    elif money > price:
+        print("Sorry that's not enough money. Money refunded.")
+        return False
+    else:
         result = money - price
-        resources['profit'] = price
-        print(f"Here is ${result} dollars in change")
+        # jika begini hanya akan menimpa bukan menambah profit
+        # resources['profit'] = price
+        resources['profit'] += price
+        if result > 0:
+            print(f"Here is ${result} dollars in change")
+        return False
     
 
 
@@ -151,6 +155,7 @@ def machinecoffee():
             elif checkingredients(resources, 'cappuccino') == 'not good':
                 print(f"Sorry there is not enough {terkecil(resources)}.")
 
-
+        else:
+            print("your input is invalid, try again")
 
 machinecoffee()
