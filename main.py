@@ -86,6 +86,7 @@ def check_transaction(money, coffe):
         result = money - price
         resources['profit'] = price
         print(f"Here is ${result} dollars in change")
+    
 
 
 
@@ -116,7 +117,9 @@ def machinecoffee():
 
             check_transaction(calculate_coin(koin_q, koin_d, koin_n, koin_p), 'latte')
             if checkingredients(resources, 'latte') == 'good':
+                #TODO: 7. Make Coffee.
                 make_a_coffee(resources, 'latte')
+                print("Here is your ☕latte. Enjoy!")
             elif checkingredients(resources, 'latte') == 'not good':
                 print(f"Sorry there is not enough {terkecil(resources)}.")
 
@@ -127,8 +130,10 @@ def machinecoffee():
             koin_n = input("How many nickles?: ")
             koin_p = input("How many pennies?: ")
             check_transaction(calculate_coin(koin_q, koin_d, koin_n, koin_p), 'espresso')
+
             if checkingredients(resources, 'espresso') == 'good':
                 make_a_coffee(resources, 'espresso')
+                print("Here is your ☕espresso. Enjoy!")
             elif checkingredients(resources, 'espresso') == 'not good':
                 print(f"Sorry there is not enough {terkecil(resources)}.")
 
@@ -139,8 +144,10 @@ def machinecoffee():
             koin_n = input("How many nickles?: ")
             koin_p = input("How many pennies?: ")
             check_transaction(calculate_coin(koin_q, koin_d, koin_n, koin_p), 'cappuccino')
+
             if checkingredients(resources, 'cappuccino') == 'good':
                 make_a_coffee(resources, 'cappuccino')
+                print("Here is your ☕cappuccino. Enjoy!")
             elif checkingredients(resources, 'cappuccino') == 'not good':
                 print(f"Sorry there is not enough {terkecil(resources)}.")
 
