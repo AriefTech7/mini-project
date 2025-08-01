@@ -28,6 +28,7 @@ resources = {
     "water": 300,
     "milk": 200,
     "coffee": 100,
+    "profit": 0.0
 }
 
 koin = {
@@ -37,12 +38,12 @@ koin = {
     "pennies":0.01
 }
 
+
 def callresources(bahan):
-    income = 0
     air = bahan['water']
     susu = bahan['milk']
     kopi = bahan['coffee']
-    return f"Water: {air}ml\nMilk: {susu}ml\nCoffee: {kopi}g\nMoney: ${income}"
+    return f"Water: {air}ml\nMilk: {susu}ml\nCoffee: {kopi}g\nMoney: ${resources['profit']}"
 
 
 
@@ -73,20 +74,27 @@ def calculate_coin(querters, dimes, nickles, pennies):
     pennie = koin['pennies'] * float(pennies)
 
     result = quarter + dime + nickle + pennie
-    return f"${result}"
+
+    return result
 
 # TODO: 6. Check transaction successful?
-def check_transaction(money, mymoney):
-    if money <  MENU['latte']['cost']:
+def check_transaction(money, coffe):
+    price = MENU[coffe]['cost']
+    if money <  price:
         return "Sorry that's not enough money. Money refunded."
-    else:
+    elif money > price:
+        result = money - price
+        resources['profit'] = price
+        print(f"Here is ${result} dollars in change")
+
+
 
 
 
 
 def machinecoffee():
     start = True
-    income = 0
+
     while start:
         # TODO: 1.Prompt user by asking “ What would you like? (espresso/latte/cappuccino): ”
         menu = input("What would you like? (espresso/latte/cappuccino): ").lower()
@@ -96,6 +104,7 @@ def machinecoffee():
         # TODO: 3.Print report
         elif menu == 'report':
             print(callresources(resources))
+
         # TODO: 4. Check resources sufficient?
         elif menu == 'latte':
             print("Please insert coins.")
@@ -104,8 +113,8 @@ def machinecoffee():
             koin_n = input("How many nickles?: ")
             koin_p = input("How many pennies?: ")
 
-            money_customer = calculate_coin(koin_q, koin_d, koin_n, koin_p)
-            check_transaction(money_customer, income)
+
+            check_transaction(calculate_coin(koin_q, koin_d, koin_n, koin_p), 'latte')
             if checkingredients(resources, 'latte') == 'good':
                 make_a_coffee(resources, 'latte')
             elif checkingredients(resources, 'latte') == 'not good':
@@ -117,7 +126,7 @@ def machinecoffee():
             koin_d = input("How many dimes?: ")
             koin_n = input("How many nickles?: ")
             koin_p = input("How many pennies?: ")
-            money_customer = calculate_coin(koin_q, koin_d, koin_n, koin_p)
+            check_transaction(calculate_coin(koin_q, koin_d, koin_n, koin_p), 'espresso')
             if checkingredients(resources, 'espresso') == 'good':
                 make_a_coffee(resources, 'espresso')
             elif checkingredients(resources, 'espresso') == 'not good':
@@ -129,7 +138,7 @@ def machinecoffee():
             koin_d = input("How many dimes?: ")
             koin_n = input("How many nickles?: ")
             koin_p = input("How many pennies?: ")
-            money_customer = calculate_coin(koin_q, koin_d, koin_n, koin_p)
+            check_transaction(calculate_coin(koin_q, koin_d, koin_n, koin_p), 'cappuccino')
             if checkingredients(resources, 'cappuccino') == 'good':
                 make_a_coffee(resources, 'cappuccino')
             elif checkingredients(resources, 'cappuccino') == 'not good':
